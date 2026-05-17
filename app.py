@@ -7,7 +7,7 @@ from google.genai import types
 
 app = Flask(__name__)
 
-# --- 🔑 GEMMA 4 CONFIGURATION --- 
+# --- 🔑 GEMMA 4 CONFIGURATION ---
 # IMPORTANT: Delete the hardcoded key before pushing to GitHub!
 GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE'
 client = genai.Client(api_key=GEMINI_API_KEY)

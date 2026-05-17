@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Session | RealWorld AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="chat-wrapper">
+        <aside class="feedback-panel glass-card">
+            <div class="panel-header">
+                <span class="live-indicator">● LIVE COACH</span>
+            </div>
+
+            <div class="stat-item">
+                <label>Scenario</label>
+                <div id="display-scenario" class="value">
+                     {{ scenario.replace('_', ' ').title() }}
+                </div>
+            </div>
+
+            <div class="stat-item">
+                <label>Difficulty</label>
+                <div id="display-diff" class="value text-primary">
+                    {{ difficulty.capitalize() }}
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="analysis-section">
+                <h4>Real-time Analysis</h4>
+                <div id="feedback-content" class="feedback-text">
+                    Awaiting your first message...
+                </div>
+            </div>
+
+            <button onclick="handleEndSession()" id="endSessionBtn" class="btn-outline">End Session</button>
+        </aside>
+
+        <main class="chat-container">
+            <div id="chatBox" class="chat-display">
+                <div class="message ai-msg">
+                    <div class="avatar">🤖</div>
+                    <div class="msg-content">
+                        Hello. I'm ready to begin the simulation. Whenever you're ready, you can type or speak your response.
+                    </div>
+                </div>
+            </div>
+
+            <div id="typingIndicator" class="typing-indicator" style="display: none;">
+                Gemma is thinking...
+            </div>
+
+            <div class="input-area glass-card">
+                <button id="micBtn" class="btn-icon" title="Speak">
+                    <span id="micIcon">🎤</span>
+                </button>
+
+                <input type="text" id="userInput" placeholder="Type or speak your response..." autocomplete="off">
+
+                <button id="sendBtn" class="btn-primary-circle" onclick="sendMessage()">
+                    <span class="send-icon">✦</span>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        // Setup UI Labels from URL Parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const scenario = urlParams.get('scenario');
+        const diff = urlParams.get('diff');
+
+        document.getElementById('display-scenario').innerText = scenario.replace('_', ' ');
+        document.getElementById('display-diff').innerText = diff.charAt(0).toUpperCase() + diff.slice(1);
+
+        // Auto-scroll to bottom on load
+        const chatBox = document.getElementById('chatBox');
+        chatBox.scrollTop = chatBox.scrollHeight;
+    </script>
+</body>
+</html>
